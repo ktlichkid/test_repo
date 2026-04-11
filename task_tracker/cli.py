@@ -30,6 +30,28 @@ def cmd_list(args) -> int:
     return 0
 
 
+def cmd_complete(args) -> int:
+    svc = TaskService(TaskRepository())
+    try:
+        task = svc.complete(int(args.id))
+    except ValueError as e:
+        print(f"Error: {e}")
+        return 1
+    print(f"Completed task {task.id}: {task.description}")
+    return 0
+
+
+def cmd_delete(args) -> int:
+    svc = TaskService(TaskRepository())
+    try:
+        task = svc.delete(int(args.id))
+    except ValueError as e:
+        print(f"Error: {e}")
+        return 1
+    print(f"Deleted task {task.id}: {task.description}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="task", description="Personal Task Tracker v1")
     sub = p.add_subparsers(dest="command", required=True)
@@ -40,6 +62,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_list = sub.add_parser("list", help="List tasks")
     p_list.set_defaults(func=cmd_list)
+
+    p_complete = sub.add_parser("complete", help="Mark a task as completed")
+    p_complete.add_argument("id", help="Task id")
+    p_complete.set_defaults(func=cmd_complete)
+
+    p_delete = sub.add_parser("delete", help="Delete a task")
+    p_delete.add_argument("id", help="Task id")
+    p_delete.set_defaults(func=cmd_delete)
 
     return p
 
