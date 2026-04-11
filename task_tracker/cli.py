@@ -30,10 +30,21 @@ def cmd_list(args) -> int:
     return 0
 
 
+def parse_task_id(s: str) -> int:
+    try:
+        val = int(s)
+    except Exception:
+        raise ValueError(f"Invalid id: {s}. Must be a positive integer")
+    if val <= 0:
+        raise ValueError(f"Invalid id: {s}. Must be a positive integer")
+    return val
+
+
 def cmd_complete(args) -> int:
     svc = TaskService(TaskRepository())
     try:
-        task = svc.complete(int(args.id))
+        task_id = parse_task_id(args.id)
+        task = svc.complete(task_id)
     except ValueError as e:
         print(f"Error: {e}")
         return 1
@@ -44,7 +55,8 @@ def cmd_complete(args) -> int:
 def cmd_delete(args) -> int:
     svc = TaskService(TaskRepository())
     try:
-        task = svc.delete(int(args.id))
+        task_id = parse_task_id(args.id)
+        task = svc.delete(task_id)
     except ValueError as e:
         print(f"Error: {e}")
         return 1
