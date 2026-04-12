@@ -203,18 +203,103 @@ Implementation should be validated with focused checks that map directly to the 
 - Keep dependency footprint minimal
 - Keep code structure simple enough for safe review
 
-## 10. Ticketing Plan After Approval
+## 10. Dependency Management
 
-After design approval, break work into self-contained tickets with corresponding GitHub issues. Likely ticket boundaries:
-- CLI skeleton and command routing
-- task storage and repository behavior
-- add/list operations
-- complete/delete operations
-- validation and persistence tests
+### Current Dependencies
+- Runtime: Python 3.9+
+- Standard library modules only for the current implementation:
+  - `argparse`
+  - `dataclasses`
+  - `datetime`
+  - `json`
+  - `pathlib`
+  - `typing`
+- Test-only standard library modules:
+  - `unittest`
+  - `tempfile`
+  - `shutil`
+  - `io`
+  - `os`
+  - `contextlib`
 
-Final ticket boundaries should be assigned only after review of this design.
+### Installation Approach
+- No third-party package installation is currently required.
+- Local setup should be:
+  - install Python 3.9 or newer
+  - clone the repository
+  - run the CLI with `python task.py ...`
+  - run tests with `python -m unittest discover -s tests -p "test*.py" -v`
 
-## 11. Open Decisions For Approval
+### Dependency Documentation Needed
+- `README.md` with runtime and test prerequisites
+- a short dependency note stating that the project currently relies only on the Python standard library
+
+## 11. Documentation Plan
+
+The project now needs explicit documentation work beyond the design doc itself.
+
+### Required Docs
+- `README.md`
+  - project purpose
+  - Python version requirement
+  - installation/setup steps
+  - command usage examples
+  - test command
+- dependency documentation
+  - current dependency list
+  - installation/setup expectations
+  - note that there are no third-party packages today
+- architecture documentation
+  - high-level component overview
+  - storage model and file location behavior
+  - CLI/service/repository responsibilities
+
+### Documentation Scope Notes
+- Documentation should match the implementation already merged to `main`.
+- Documentation should avoid promising future features outside v1.
+
+## 12. CI/CD Plan
+
+The project currently has no repository automation and needs a minimal CI baseline.
+
+### Recommended Initial CI
+- Trigger on:
+  - pushes to `main`
+  - pull requests targeting `main`
+- Environment:
+  - GitHub Actions
+  - Python 3.9 and one newer supported Python version if desired later
+- Required steps:
+  - checkout repository
+  - set up Python
+  - run `python -m unittest discover -s tests -p "test*.py" -v`
+
+### Initial CD Position
+- No deployment pipeline is needed because the product is local-only.
+- For v1, "CD" should be limited to keeping `main` green and mergeable.
+
+### CI/CD Documentation Needed
+- workflow file comments or accompanying documentation explaining:
+  - what the workflow runs
+  - when it runs
+  - how failures should be interpreted
+
+## 13. Remaining Task Breakdown
+
+The core v1 implementation is already delivered on `main`. Remaining work is documentation and project automation.
+
+### Remaining Workstreams
+- Dependency documentation
+- Project usage documentation, including `README.md`
+- Architecture documentation
+- CI/CD setup
+
+### Sequencing
+- Documentation tasks can start immediately from the current `main`.
+- CI/CD setup can also start now because the test command and project structure are already stable enough for a minimal workflow.
+- Architecture documentation should reflect the code already merged in PRs #7 and #8.
+
+## 14. Open Decisions For Approval
 
 Please confirm these design decisions before implementation tickets are created:
 - completed tasks remain visible by default
