@@ -10,7 +10,7 @@ This document summarizes the Task Tracker CLI architecture for quick onboarding 
 
 ## Data Model
 Task fields:
-- `id: int` ¡ª stable, unique, 1..N
+- `id: int` - stable, unique, 1..N
 - `description: str`
 - `completed: bool`
 - `created_at: ISO8601 str`
@@ -47,3 +47,4 @@ Task fields:
 - Optional: configurable storage path via env/flag.
 - Optional: richer list formatting and filters.
 - Optional: atomic file write helper.
+
