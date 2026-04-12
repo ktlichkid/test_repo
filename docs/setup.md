@@ -1,4 +1,4 @@
-# Setup and Dependencies
+﻿# Setup and Dependencies
 
 This project is a local-only CLI written in Python. v1 uses only Python standard library modules - there are no third-party runtime dependencies.
 
@@ -49,4 +49,3 @@ python -m unittest discover -s tests -p "test*.py" -v
 ## Notes
 - If your Windows console shows garbled non-ASCII text, enable UTF-8 mode or use a UTF-8 compatible font. JSON persistence is UTF-8 and not affected.
 - Packaging and a dedicated `task` entrypoint may be added in a future ticket.
-
