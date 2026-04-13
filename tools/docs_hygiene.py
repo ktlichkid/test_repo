@@ -41,10 +41,11 @@ def main(argv:list[str])->int:
         pn=path.name.lower()
         if pn in {'contributing.md','pull_request_template.md'} or str(path).lower().endswith('/.github/pull_request_template.md'):
             if not has_hooks(txt):
-                print('FAIL {path}: missing expected guardrail hooks (close-issue, PR link, reviewer tagging)'); failed=True
+                print(f'FAIL {path}: missing expected guardrail hooks (close-issue, PR link, reviewer tagging)'); failed=True
             else:
                 print(f'OK   {path}: guardrail hooks present')
     return 1 if failed else 0
 
 if __name__=='__main__':
     raise SystemExit(main(sys.argv[1:]))
+
